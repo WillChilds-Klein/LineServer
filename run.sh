@@ -1,13 +1,13 @@
 #!/bin/sh
 
-./build.sh;
+./scripts/build.sh;
 
+cd bin;
 if [ -z $1 ]
 	then
 		java LineClient;
-		echo "no argument"
 	else
-		java LineServer $1;
-		"argument = $1"
+		java LineServer ../$1;
 fi
 rm -rf lines;
+cd ..;
