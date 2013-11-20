@@ -5,7 +5,7 @@
  The server is started by running the run.sh script with the name
  	of the file to serve as the singular argument. To start the 
  	client, the run.sh script is run without any additional 
- 	arguments.
+ 	arguments. The system works across a network as well as locally.
 
  My system works by reading the file to be served line by line and
  	dividing it into separate files for each line. When a particular
@@ -41,7 +41,28 @@
  	and Key/Value stores provide constant time access.
 
 
-No Third party software was used in the final version program.
+ISSUES:
+	* When the client exits their program incorrectly or abruptly (by 
+	sending an interrupt signal, for example), the server catches a 
+	null pointer acception and fails. This is due to a readLine() being
+	called on an object that now has null value, because the connection
+	was not properly closed.
+	* This software will not perform at scale. It does not utilize other
+	drives (for more space on disk), it uses normal String types (depleting
+	Java's heap space quickly), and the transfer over the network is line
+	by line (the size of the line to be transferred is therefore constrained
+	by the size of the buffer).
+	* No multithreading. In order to serve multiple clients at once, I would
+	have had to implement multithreading, spinning off a new thread for each
+	new client, which I did not have time to do.
+	* No test scripts. Given more time, I would have written a test script
+	in either bash or python testing the performance of LineServer. I would
+	test performance in two main dimensions: query rate and file size (as well as other
+	edge cases like robustness/error handling).
+
+No Third party software was used in the final version of this program.
 
 All in all, including a fair amount of research and outlining, this
-	assignment took me between 10 and 15 hours to implement.
+	assignment took me between 10 and 15 hours to implement. I apologize
+	for the lack of completeness and thoroughness, but I have been 
+	very time-constrained recently.
