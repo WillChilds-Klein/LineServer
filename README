@@ -1,0 +1,30 @@
+/***************************LineServer****************************/
+ Will Childs-Klein
+ January 2013
+
+ My system works by reading the file to be served line by line and
+ 	dividing it into separate files for each line. When a particular
+ 	line is requested, the appropriate file is read into memory and 
+ 	transferred over a network Socket.
+
+ The system should perform well as the number of requests increases 
+ 	per second because the data file is already parsed, and the use
+ 	of Buffered I/O reduces low-level OS interaction, hopefully
+ 	increasing speed (according to Oracle docs)
+
+ Currently, The system handles large data files well as long as each 
+ 	line is below ~100MB. Java's heap allocation can't handle that 
+ 	much data. Editing the code to not store lines as Strings would 
+ 	remedy this, as well as reading and transferring the data byte by
+ 	byte over the socket, possibly at the expense of read/transfer 
+ 	speed. An extra hour or so of coding should resolve this issue.
+
+ I primarily used Oracle's documentation on java.net (Sockets) and 
+ 	java.io (Readers/Writers/other IO miscellany) as reference
+ 	material. I consulted forums such as StackOverflow to deal with
+ 	various Exceptions as they arose.
+
+No Third party software was used for this program.
+
+All in all, including a fair amount of research and outlining, this
+	assignment took me between 10 and 15 hours to implement.
