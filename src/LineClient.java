@@ -3,17 +3,27 @@ import java.net.*;
 import java.io.*;
 
 public class LineClient{
-	public static void main(String[] args) throws IOException{
-		BufferedReader stdin = new BufferedReader(new InputStreamReader(
-													  System.in));
-		System.out.println("Please enter the IP address or hostname of the"
-							+ " desired server.");
-		String host = stdin.readLine();
-		int port = 10497;
 
-		Socket clientSocket = null;
-		PrintWriter out = null;
-		BufferedReader in = null;
+	static int port;
+	String host;
+	Socket clientSocket;
+	PrintWriter out;
+	BufferedReader in;
+	BufferedReader stdin;
+
+	public LineClient(){
+		port = 10497;
+		host = null;
+		clientSocket = null;
+		out = null;
+		in = null;
+		stdin = new BufferedReader(new InputStreamReader(System.in));
+	}
+
+	public void init() throws IOException{
+		System.out.println("Please enter the IP address or hostname of the"
+					+ " desired server.");
+		String host = stdin.readLine();
 
 		try{
 			clientSocket = new Socket(host, port);
@@ -31,7 +41,10 @@ public class LineClient{
 			System.exit(1);
 		}
 		System.out.println("Success! Connection established.");
+		return;
+	}
 
+	public void process() throws IOException{
 		String userInput = null;
 		String temp = null;
 
@@ -44,10 +57,21 @@ public class LineClient{
 				System.out.println("OK");
 			System.out.println(temp);
 		}
+		return;
+	}
 
+	public void shutdown() throws IOException{
 		in.close();
 		out.close();
 		stdin.close();
 		clientSocket.close();
+	}
+
+	public static void main(String[] args) throws IOException{
+		LineClient lc = new LineClient();
+		
+		lc.init();
+		lc.process();
+		lc.shutdown();
 	}
 }
